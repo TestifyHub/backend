@@ -15,7 +15,7 @@ app.use(
 );
 
 const integrationRoutes = require("./src/routes/IntegrationRoutes");
-app.use("/getintegrations", integrationRoutes);
+app.use("/api/integrations", integrationRoutes);
 
 const mongoURI = process.env.MONGO_URI;
 
