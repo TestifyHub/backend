@@ -3,6 +3,7 @@ const zod = require("zod");
 const signupValidationSchema = zod.object({
   body: zod
     .object({
+      fullName: zod.string(),
       email: zod.string().email(),
       password: zod
         .string()

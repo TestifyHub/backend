@@ -1,8 +1,13 @@
 require("dotenv").config();
 
+const passport = require("passport");
+require("./src/config/passport");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const session = require("express-session");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -14,10 +19,53 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+
 const integrationRoutes = require("./src/routes/IntegrationRoutes");
+const authRoutes = require("./src/routes/AuthRoutes");
+
 app.use("/api/integrations", integrationRoutes);
+app.use("/api", authRoutes);
 
 const mongoURI = process.env.MONGO_URI;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["openid", "profile", "email"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    const user = req.user;
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    res.redirect(`http://localhost:5173/signin?token=${token}`);
+  }
+);
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
 
 mongoose
   .connect(mongoURI)
