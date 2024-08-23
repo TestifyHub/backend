@@ -18,6 +18,7 @@ passport.use(
             googleId: profile.id,
             email: profile.emails[0].value,
             fullName: profile.displayName,
+            profilePicUrl: profile._json.picture,
           });
         }
 

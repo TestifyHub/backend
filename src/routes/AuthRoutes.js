@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userSchema = require("../models/UserSchema");
+const verifyToken = require("../utils/verifyToken");
 
 const ZodMiddleware = require("../middleware/ZodMiddleware");
 const signupValidationSchema = require("../utils/signupValidationSchema");
@@ -66,5 +67,7 @@ router.post("/signin", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.post("/verify-token", verifyToken.verify);
 
 module.exports = router;

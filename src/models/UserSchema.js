@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   fullName: { type: String },
   googleId: { type: String },
+  profilePicUrl: { type: String, default: "/userIcon.svg" },
 });
 
 userSchema.index(
