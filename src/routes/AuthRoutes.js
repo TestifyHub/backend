@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const userSchema = require("../models/UserSchema");
+const userSchema = require("../models/UserModel");
 const verifyToken = require("../utils/verifyToken");
 
 const ZodMiddleware = require("../middleware/ZodMiddleware");

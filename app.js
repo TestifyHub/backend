@@ -30,9 +30,11 @@ app.use(
 
 const integrationRoutes = require("./src/routes/IntegrationRoutes");
 const authRoutes = require("./src/routes/AuthRoutes");
+const spaceRoutes = require("./src/routes/SpaceRoutes");
 
 app.use("/api/integrations", integrationRoutes);
 app.use("/api", authRoutes);
+app.use("/api", spaceRoutes);
 
 const mongoURI = process.env.MONGO_URI;
 
