@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const spaceSchema = require("../models/SpaceModel");
 const { upload } = require("../utils/cloudinary");
+const spaceController = require("../controllers/SpaceController");
 
 // POST /api/spaces
 router.post("/newspace", upload.single("image"), async (req, res) => {
@@ -32,5 +33,7 @@ router.post("/newspace", upload.single("image"), async (req, res) => {
     res.status(500).json({ message: "Internal server error", err });
   }
 });
+
+router.post("/getallspaces",spaceController.getSpaceById);
 
 module.exports = router;
