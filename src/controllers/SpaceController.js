@@ -28,4 +28,4 @@ const getSpaceById = async (req, res) => {
   }
 };
 
-module.exports = { getSpacesByUserId };
+module.exports = { getSpacesByUserId, getSpaceById };

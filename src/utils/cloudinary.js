@@ -10,9 +10,22 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "spaces",
-    allowedFormats: ["jpg", "png", "jpeg"],
+  params: async (req, file) => {
+    let folder = "spaces";
+    let resource_type = "auto"; 
+    let allowedFormats = ["jpg", "png", "jpeg"];
+
+    
+    if (file.mimetype.startsWith("video")) {
+      allowedFormats = ["mp4", "mov", "avi"];
+      resource_type = "video";
+    }
+
+    return {
+      folder,
+      allowed_formats: allowedFormats,
+      resource_type: resource_type,
+    };
   },
 });
 

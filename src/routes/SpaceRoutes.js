@@ -11,7 +11,7 @@ router.post("/newspace", upload.single("image"), async (req, res) => {
     if (!spaceName || !header || !message || !questions || !color || !userId) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    let imageUrl = " ";
+    let imageUrl = "";
     if (req.file) {
       imageUrl = req.file.path;
     }
@@ -23,7 +23,7 @@ router.post("/newspace", upload.single("image"), async (req, res) => {
       message,
       questions: JSON.parse(questions),
       color,
-      image: imageUrl, // Store the image URL
+      image: imageUrl,
       userId,
     });
     const space = await newSpace.save();
