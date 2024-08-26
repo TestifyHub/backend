@@ -35,6 +35,8 @@ router.post("/newspace", upload.single("image"), async (req, res) => {
   }
 });
 
-router.post("/getallspaces",spaceController.getSpaceById);
+router.post("/getallspaces",spaceController.getSpacesByUserId);
+
+router.post("/getspace", spaceController.getSpaceById);
 
 module.exports = router;
