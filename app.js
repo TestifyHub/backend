@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend URL
+    origin: ["http://localhost:5173", "http://localhost:5000"], // Frontend URL
   })
 );
 
@@ -67,6 +67,10 @@ app.get(
 app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
+});
+
+app.get("/login", (req, res) => {
+  res.redirect("http://localhost:5173/signin");
 });
 
 mongoose

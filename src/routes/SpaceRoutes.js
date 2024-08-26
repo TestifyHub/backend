@@ -3,7 +3,7 @@ const router = express.Router();
 const spaceSchema = require("../models/SpaceModel");
 const { upload } = require("../utils/cloudinary");
 
-// POST /api/spaces
+
 router.post("/newspace", upload.single("image"), async (req, res) => {
   try {
     const { spaceName, header, message, questions, color, userId } = req.body;
@@ -25,8 +25,9 @@ router.post("/newspace", upload.single("image"), async (req, res) => {
       image: imageUrl, // Store the image URL
       userId,
     });
-    await newSpace.save();
-    res.status(201).json({ success: true });
+    const space = await newSpace.save();
+    console.log(space);
+    res.status(201).json({ success: true, space });
   } catch (err) {
     console.error("Error creating space:", err);
     res.status(500).json({ message: "Internal server error", err });
