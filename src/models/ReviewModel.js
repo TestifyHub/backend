@@ -10,6 +10,7 @@ const reviewSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   image: { type: String },
+  liked: {type: Boolean, default: false},
 });
 
 module.exports = mongoose.model("review", reviewSchema);
