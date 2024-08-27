@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const spaceSchema = new Schema({
   spaceName: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: String },
   header: { type: String, required: true },
   message: { type: String, required: true },
   questions: [
