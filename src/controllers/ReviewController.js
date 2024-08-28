@@ -103,7 +103,7 @@ const likeReview = async (req, res) => {
 
   try {
     
-    const review = await Review.findById(reviewId);
+    const review = await reviewSchema.findById(reviewId);
     if (!review) {
       return res.status(404).json({ message: 'Review not found' });
     }
