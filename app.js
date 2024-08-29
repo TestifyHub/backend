@@ -1,3 +1,7 @@
+require("@babel/register")({
+  presets: ["@babel/preset-env", "@babel/preset-react"],
+});
+
 require("dotenv").config();
 
 const passport = require("passport");
@@ -8,16 +12,17 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const { renderToString } = require("react-dom/server");
+const fs = require("fs");
 
 const app = express();
+const React = require("react");
+const Embed = require("./src/components/Embed.jsx").default;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "http://localhost:5000"], // Frontend URL
-  })
-);
+app.use(cors());
 
 app.use(
   session({
@@ -27,6 +32,8 @@ app.use(
     cookie: { secure: false },
   })
 );
+
+app.use(express.static("public"));
 
 const integrationRoutes = require("./src/routes/IntegrationRoutes");
 const authRoutes = require("./src/routes/AuthRoutes");
@@ -73,6 +80,33 @@ app.get("/logout", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.redirect("http://localhost:5173/signin");
+});
+
+app.get("/embed/:type/:spaceId", async (req, res) => {
+  const { type, spaceId } = req.params;
+  let reviews = [];
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/reviews/${spaceId}/liked`
+    );
+    reviews = await response.json();
+    reviews = reviews.reviews;
+    console.log(reviews);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+  const componentMarkup = renderToString(
+    <Embed type={type} reviews={reviews} />
+  );
+  const html = fs.readFileSync(
+    path.resolve(__dirname, "views", "index.html"),
+    "utf8"
+  );
+
+  const finalHtml = html.replace("<!-- APP -->", componentMarkup);
+
+  res.send(finalHtml);
 });
 
 mongoose
