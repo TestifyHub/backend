@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function AnimatedEmbed() {
-  return (
-    <div>AnimatedEmbed</div>
-  )
+function AnimatedEmbed({ reviews }) {
+  return <div>AnimatedEmbed</div>;
 }
 
-export default AnimatedEmbed
+export default AnimatedEmbed;

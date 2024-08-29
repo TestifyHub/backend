@@ -11,7 +11,7 @@ function Embed({ type, reviews }) {
   } else if (type === "carousel") {
     return <CarouselEmbed reviews={reviews} />;
   } else {
-    return <div>Invalid embed type</div>;
+    return <div className="bg-sky-400 text-sky-400">Invalid embed type</div>;
   }
 }
 

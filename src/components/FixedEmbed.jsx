@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-function FixedEmbed() {
-  return (
-    <div>FixedEmbed</div>
-  )
+function FixedEmbed({ reviews }) {
+  return <div>FixedEmbed</div>;
 }
 
-export default FixedEmbed
+export default FixedEmbed;

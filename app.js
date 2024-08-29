@@ -99,10 +99,13 @@ app.get("/embed/:type/:spaceId", async (req, res) => {
   const componentMarkup = renderToString(
     <Embed type={type} reviews={reviews} />
   );
+
   const html = fs.readFileSync(
     path.resolve(__dirname, "views", "index.html"),
     "utf8"
   );
+
+  console.log(path.resolve(__dirname, "views", "index.html"));
 
   const finalHtml = html.replace("<!-- APP -->", componentMarkup);
 
