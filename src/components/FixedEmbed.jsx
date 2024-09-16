@@ -13,6 +13,7 @@ function FixedEmbed({ reviews }) {
                 "--highlight-text-color": "#111827",
                 borderStyle: "solid",
                 width: "300px", // Adjusted width for smaller div
+                height: "400px",
               }}
               className="testimonial-card relative flex flex-col p-4 border text-testimonial rounded-lg bg-white hover:bg-gray-50 border-gray-200 text-gray-800 mx-auto"
             >

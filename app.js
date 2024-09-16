@@ -1,3 +1,4 @@
+require("ignore-styles");
 require("@babel/register")({
   presets: ["@babel/preset-env", "@babel/preset-react"],
 });
@@ -18,7 +19,6 @@ const fs = require("fs");
 
 const app = express();
 const React = require("react");
-const Embed = require("./src/components/Embed.jsx").default;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -39,6 +39,7 @@ const integrationRoutes = require("./src/routes/IntegrationRoutes");
 const authRoutes = require("./src/routes/AuthRoutes");
 const spaceRoutes = require("./src/routes/SpaceRoutes");
 const reviewRoutes = require("./src/routes/ReviewRoutes");
+const { default: FixedEmbed } = require("./src/components/FixedEmbed.jsx");
 
 app.use("/api/integrations", integrationRoutes);
 app.use("/api", authRoutes);
@@ -82,8 +83,8 @@ app.get("/login", (req, res) => {
   res.redirect("http://localhost:5173/signin");
 });
 
-app.get("/embed/:type/:spaceId", async (req, res) => {
-  const { type, spaceId } = req.params;
+app.get("/embed/:spaceId", async (req, res) => {
+  const {spaceId } = req.params;
   let reviews = [];
   try {
     const response = await fetch(
@@ -97,7 +98,7 @@ app.get("/embed/:type/:spaceId", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
   const componentMarkup = renderToString(
-    <Embed type={type} reviews={reviews} />
+    <FixedEmbed reviews={reviews} />
   );
 
   const html = fs.readFileSync(
